@@ -9,3 +9,8 @@ class Port:
 
     def __repr__(self):
         return self.__str__()
+
+    def __eq__(self, other):
+        if not isinstance(other, Port):
+            return False
+        return self.resource == other.resource and self.exchange_rate == other.exchange_rate

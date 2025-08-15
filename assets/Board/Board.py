@@ -56,7 +56,7 @@ class Board:
         self.shuffleTiles()
         self.prepareTilePositions()
         self.dealTiles()
-        print(self.port_deck)
+        # print(self.port_deck)
 
         # toDo Initialise ports
 
@@ -92,5 +92,5 @@ class Board:
 
         self.tile_positions = sum(rotated_outer_positions, []) + rotated_inner_positions + CENTRE_TILE_POSITION
 
-test = Board()
-print(test)
+# test = Board()
+# print(test)
