@@ -1,6 +1,8 @@
 from customTypes.constants import Resource
 from customTypes.Board import TilePosition
 
+BOARD_HEIGHT = 12
+
 MAX_PLAYERS = 4
 MIN_PLAYERS = 3
 
@@ -28,3 +30,5 @@ INNER_TILE_POSITIONS: list[TilePosition] = [
 ]
 
 CENTRE_TILE_POSITION: list[TilePosition] = [(2, 2)]
+
+NUMBER_TOKENS = (2, 3, 4, 5, 6, 8, 9, 10, 11, 12)
