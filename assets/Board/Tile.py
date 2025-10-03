@@ -3,6 +3,7 @@ class Tile:
         self.resource = resource
         self.position = position
         self.number = number
+        self.adjacentSettlementPositions = []
 
         self.has_robber = number is None
 

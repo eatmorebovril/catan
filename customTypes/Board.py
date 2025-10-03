@@ -4,3 +4,4 @@ BoardRow = list[Tile | None]
 HexGrid = list[BoardRow]
 
 TilePosition = tuple[int, int]
+SettlementPosition = tuple[int, int]

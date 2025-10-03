@@ -1,5 +1,5 @@
 import unittest
-from utils.FunctionUtils import snakeToCamelCase
+from helpers.General import snakeToCamelCase
 
 class TestFunctionUtils(unittest.TestCase):
     def test_snake_to_camel_case(self):

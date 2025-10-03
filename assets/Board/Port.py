@@ -1,7 +1,7 @@
 class Port:
     def __init__(self, resource: str = None):
         self.resource = resource
-        self.exchange_rate = 3 if not self.resource else 2
+        self.exchange_rate = 2 if self.resource else 3
 
     def __str__(self):
         port_resource = "" if not self.resource else f" {self.resource}"
@@ -13,4 +13,4 @@ class Port:
     def __eq__(self, other):
         if not isinstance(other, Port):
             return False
-        return self.resource == other.resource and self.exchange_rate == other.exchange_rate
+        return self.exchange_rate == other.exchange_rate and self.resource == other.resource

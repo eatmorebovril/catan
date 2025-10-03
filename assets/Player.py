@@ -81,6 +81,8 @@ class Player:
         self.developmentCards["knight"] -= 1
         self.armySize += 1
 
+        return True
+
 
 # p1 = Player(0)
 #
