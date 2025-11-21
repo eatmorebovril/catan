@@ -132,7 +132,6 @@ class Board:
         """
         Initialises settlement spots on the board.
         """
-        # toDo write tests for this
         for row_index in range(BOARD_HEIGHT):
             for col_index in range(getRowLength(row_index)):
                 self.settlement_spots[row_index].append(
@@ -143,7 +142,6 @@ class Board:
         """
         Assigns ports to specified settlement spots.
         """
-        # toDo write tests for this
         for pair in self.port_settlement_positions:
             port = self.port_deck.pop()
             for position in pair:

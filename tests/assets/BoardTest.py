@@ -1,8 +1,9 @@
+from assets.Board.SettlementSpot import SettlementSpot
 from assets.Board.Tile import Tile
-from constants.constants import DESERT, OUTER_TILE_POSITIONS, INNER_TILE_POSITIONS, CENTRE_TILE_POSITION
+from constants.constants import DESERT, OUTER_TILE_POSITIONS, INNER_TILE_POSITIONS, CENTRE_TILE_POSITION, BOARD_HEIGHT
 from tests.constants import STANDARD_TILE_POSITIONS
 from tests.testHelpers import makeBoardNoSetup
-from helpers.Board import rotateList
+from helpers.Board import rotateList, getRowLength
 from unittest.mock import patch
 import copy
 import unittest
@@ -11,6 +12,7 @@ class TestBoard(unittest.TestCase):
     def setUp(self) -> None:
         self.board = makeBoardNoSetup()
 
+    # Shuffle Tiles
     def testShuffleTilesRandomisesDecks(self) -> None:
         original_tile_deck = copy.deepcopy(self.board.tile_deck)
         original_port_deck = copy.deepcopy(self.board.port_deck)
@@ -21,6 +23,7 @@ class TestBoard(unittest.TestCase):
         self.assertCountEqual(self.board.tile_deck, original_tile_deck)
         self.assertCountEqual(self.board.port_deck, original_port_deck)
 
+    # Deal Tiles
     def testDealTilesPopulatesBoardWithCorrectTilesAndNumbers(self) -> None:
         board = makeBoardNoSetup()
         board.tile_positions = STANDARD_TILE_POSITIONS
@@ -65,6 +68,7 @@ class TestBoard(unittest.TestCase):
         )
         self.assertEqual(none_count, 1)
 
+    # Tile Positions
     def testPrepareTilePositionsProduces19UniqueValidCoordinates(self):
         board = makeBoardNoSetup()
         with patch('assets.Board.Board.random.randint', return_value=0):
@@ -106,6 +110,39 @@ class TestBoard(unittest.TestCase):
         # Sets are equal because it's a rotation of groups
         self.assertEqual(set(board_a.tile_positions), set(board_b.tile_positions))
 
+    # Settlement Spots
+    def testSetUpSettlementSpotsCreatesCorrectStructure(self) -> None:
+        self.board.setUpSettlementSpots()
+
+        self.assertEqual(len(self.board.settlement_spots), BOARD_HEIGHT)
+
+        for row_index in range(BOARD_HEIGHT):
+            row = self.board.settlement_spots[row_index]
+            self.assertEqual(len(row), getRowLength(row_index))
+            for spot in row:
+                self.assertIsInstance(spot, SettlementSpot)
+
+    def testSetUpSettlementSpotsAssignsCorrectPositions(self) -> None:
+        self.board.settlement_spots = [[] for _ in range(BOARD_HEIGHT)]
+        self.board.setUpSettlementSpots()
+
+        for row_index in range(BOARD_HEIGHT):
+            for col_index in range(getRowLength(row_index)):
+                spot = self.board.settlement_spots[row_index][col_index]
+                self.assertEqual(spot.position, (row_index, col_index))
+
+    # Ports
+    def testPortsAssignedToCorrectPositions(self) -> None:
+        self.board.setUpSettlementSpots()
+        self.board.setUpPorts()
+
+        for first_pos, second_pos in self.board.port_settlement_positions:
+            port1 = self.board.settlement_spots[first_pos[0]][first_pos[1]].adjacent_port
+            port2 = self.board.settlement_spots[second_pos[0]][second_pos[1]].adjacent_port
+
+            self.assertIsNotNone(port1, msg=f"No port assigned at {first_pos}")
+            self.assertIsNotNone(port2, msg=f"No port assigned at {second_pos}")
+            self.assertEqual(port1, port2, msg=f"Ports at {first_pos, second_pos} do not match")
 
 if __name__ == "__main__":
     unittest.main()
