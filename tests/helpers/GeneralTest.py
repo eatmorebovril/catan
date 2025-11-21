@@ -1,7 +1,7 @@
 import unittest
 from helpers.General import snakeToCamelCase
 
-class TestFunctionUtils(unittest.TestCase):
+class TestGeneralHelpers(unittest.TestCase):
     def test_snake_to_camel_case(self):
         self.assertEqual(snakeToCamelCase("test_remove_resource_from_hand"), "testRemoveResourceFromHand")
         self.assertEqual(snakeToCamelCase("another_example_here"), "anotherExampleHere")

@@ -1,7 +1,7 @@
 from assets.Board.Tile import Tile
 from constants.constants import DESERT, OUTER_TILE_POSITIONS, INNER_TILE_POSITIONS, CENTRE_TILE_POSITION
 from tests.constants import STANDARD_TILE_POSITIONS
-from tests.helpers import makeBoardNoSetup
+from tests.testHelpers import makeBoardNoSetup
 from helpers.Board import rotateList
 from unittest.mock import patch
 import copy
